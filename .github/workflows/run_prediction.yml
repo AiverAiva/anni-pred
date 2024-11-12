@@ -25,12 +25,7 @@ jobs:
         python -m pip install statsmodels
 
     - name: Run prediction script
-      run: |
-        python main.py
-
-    - name: Run prediction script
-      run: |
-        python main.py
+      run: python main.py
 
     - name: Stage changes
       run: git add data/history.json data/predicted.json data/stable.json
@@ -50,12 +45,36 @@ jobs:
     - name: Commit
       if: steps.check_changes.outputs.changes == 'true'
       run: |
-        git config --local user.email "41898282+github-actions [bot]@users.noreply.github.com"
-        git config --local user.name "github-actions [bot]"
-        git add .
-        git commit -m "Add changes" -a
-        
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -m "Add changes"
+
     - name: Push changes
+      if: steps.check_changes.outputs.changes == 'true'
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GH_TOKEN }}
+
+    # Clone the target repository
+    - name: Clone target repository
+      run: |
+        git clone https://github.com/AiverAiva/Wynnpool.git
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    # Copy stable.json to the target repository's required path
+    - name: Copy stable.json to target repository
+      run: |
+        cp data/stable.json Wynnpool/src/data/annihilation.json
+
+    # Commit and push changes to the target repository
+    - name: Commit and push to target repository
+      run: |
+        cd Wynnpool
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add src/data/annihilation.json
+        git commit -m "Update annihilation.json with latest data"
+        git push https://$GH_TOKEN@github.com/AiverAiva/Wynnpool.git main
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
