@@ -45,7 +45,9 @@ jobs:
         fi
 
     - name: Update cron schedule
-      run: ./update_cron_schedule.sh
+      run: |
+        git update-index --chmod=+x ./update_cron_schedule.sh
+        ./update_cron_schedule.sh
 
     - name: Commit
       if: steps.check_changes.outputs.changes == 'true'
