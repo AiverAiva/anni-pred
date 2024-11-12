@@ -47,13 +47,15 @@ jobs:
           echo "::set-output name=changes::true"
         fi
 
-    - name: Commit and push changes
+    - name: Commit
       if: steps.check_changes.outputs.changes == 'true'
       run: |
         git config --local user.name "github-actions"
         git config --local user.email "github-actions@github.com"
         git add data/history.json data/predicted.json data/stable.json
         git commit -m "Update predictions"
-        git push
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GH_TOKEN }}
