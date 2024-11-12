@@ -27,6 +27,14 @@ jobs:
     - name: Run prediction script
       run: |
         python main.py
+        
+    - name: Check for changes
+      run: |
+        git add data/history.json data/predicted.json
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+          exit 0
+        fi
 
     - name: Commit and push changes
       run: |
