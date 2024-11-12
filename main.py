@@ -72,3 +72,5 @@ update_stable_json(stable_file, history_file)
 subprocess.run(['python', 'pred.py'])
 
 fill_closest_predictions(stable_file, predicted_file)
+
+subprocess.run(['python', 'generate_cronjob.py'])
