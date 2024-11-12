@@ -44,10 +44,11 @@ jobs:
           echo "::set-output name=changes::true"
         fi
 
-    - name: Update cron schedule
-      run: |
-        git update-index --chmod=+x ./update_cron_schedule.sh
-        ./update_cron_schedule.sh
+    - name: Make update_cron_schedule.sh executable
+      run: chmod +x ./update_cron_schedule.sh
+
+    - name: Run update_cron_schedule.sh
+      run: ./update_cron_schedule.sh
 
     - name: Commit
       if: steps.check_changes.outputs.changes == 'true'
