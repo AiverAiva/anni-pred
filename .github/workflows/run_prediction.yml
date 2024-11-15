@@ -6,7 +6,8 @@ on:
         - main
   workflow_dispatch:
 
-permissions: write-all
+permissions:
+  actions: write
   
 jobs:
   run_prediction:
