@@ -7,8 +7,11 @@ data['datetime_utc'] = pd.to_datetime(data['datetime_utc'], unit='ms')  # Conver
 
 data = data.sort_values('datetime_utc').reset_index(drop=True)
 
+# Calculate the time difference in days between consecutive events
+data['diff_days'] = data['datetime_utc'].diff().dt.total_seconds() / (24 * 3600)
 
 diff_series = data['diff_days'].dropna()
+diff_series.index = pd.date_range(start=data['datetime_utc'].iloc[1], periods=len(diff_series), freq='D')
 
 arima_model = ARIMA(diff_series, order=(1, 1, 1))  # ARIMA with order that should handle slight trend and randomness
 fitted_model = arima_model.fit()
