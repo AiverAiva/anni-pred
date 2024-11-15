@@ -2,7 +2,7 @@
 
 CRONJOB_JSON="data/cronjob.json"
 TEMPLATE_YML="sample.yml"
-OUTPUT_YML=".github/workflows/run_prediction.yml"
+OUTPUT_YML=".github/workflows/scheduled_prediction.yml"
 
 # Extract datetime_cron value using grep and sed
 CRON_SCHEDULE=$(grep '"datetime_cron"' "$CRONJOB_JSON" | sed -E 's/.*: "(.*)".*/\1/')
