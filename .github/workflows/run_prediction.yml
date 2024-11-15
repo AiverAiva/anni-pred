@@ -27,8 +27,14 @@ jobs:
     - name: Run prediction script
       run: python main.py
 
+    - name: Make update_cron_schedule.sh executable
+      run: chmod +x ./update_cron_schedule.sh
+
+    - name: Run update_cron_schedule.sh
+      run: ./update_cron_schedule.sh
+
     - name: Stage changes
-      run: git add .github/workflows/scheduled_prediction.yml data/history.json data/predicted.json data/stable.json  
+      run: git add .github/workflows/scheduled_prediction.yml data/history.json data/predicted.json data/stable.json 
       id: git_add
 
     - name: Check for changes
@@ -41,12 +47,6 @@ jobs:
           echo "Changes detected"
           echo "::set-output name=changes::true"
         fi
-
-    - name: Make update_cron_schedule.sh executable
-      run: chmod +x ./update_cron_schedule.sh
-
-    - name: Run update_cron_schedule.sh
-      run: ./update_cron_schedule.sh
 
     - name: Commit
       if: steps.check_changes.outputs.changes == 'true'
@@ -61,19 +61,16 @@ jobs:
       with:
         github_token: ${{ secrets.GH_TOKEN }}
 
-    # Clone the target repository
     - name: Clone target repository
       run: |
         git clone https://github.com/AiverAiva/Wynnpool.git
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
-    # Copy stable.json to the target repository's required path
     - name: Copy stable.json to target repository
       run: |
         cp data/stable.json Wynnpool/src/data/annihilation.json
 
-    # Commit and push changes to the target repository
     - name: Commit and push to target repository
       run: |
         cd Wynnpool
