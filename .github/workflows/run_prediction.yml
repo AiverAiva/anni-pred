@@ -6,6 +6,9 @@ on:
         - main
   workflow_dispatch:
 
+permissions:
+  actions: write
+  
 jobs:
   run_prediction:
     runs-on: ubuntu-latest

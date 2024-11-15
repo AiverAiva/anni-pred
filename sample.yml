@@ -3,6 +3,9 @@ name: Run Prediction Script (Auto-Generated)
 on:
   schedule:
     - cron: "{{CRON_SCHEDULE}}"
+    
+permissions:
+  actions: write
 
 jobs:
   run_prediction:
