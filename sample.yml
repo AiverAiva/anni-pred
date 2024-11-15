@@ -30,7 +30,7 @@ jobs:
       run: python main.py
 
     - name: Stage changes
-      run: git add .
+      run: git add . 
       id: git_add
 
     - name: Check for changes
