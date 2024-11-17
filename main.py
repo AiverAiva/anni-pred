@@ -73,4 +73,4 @@ subprocess.run(['python', 'pred.py'])
 
 fill_closest_predictions(stable_file, predicted_file)
 
-# subprocess.run(['python', 'generate_cronjob.py'])
+subprocess.run(['python', 'generate_cronjob.py'])
