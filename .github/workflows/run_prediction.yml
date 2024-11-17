@@ -1,4 +1,4 @@
-name: Run Prediction Script (Auto-Generated)
+name: Run Prediction Script
 
 on:
   push:
@@ -27,14 +27,8 @@ jobs:
     - name: Run prediction script
       run: python main.py
 
-    - name: Make update_cron_schedule.sh executable
-      run: chmod +x ./update_cron_schedule.sh
-
-    - name: Run update_cron_schedule.sh
-      run: ./update_cron_schedule.sh
-
     - name: Stage changes
-      run: git add .github/workflows/scheduled_prediction.yml data/history.json data/predicted.json data/stable.json 
+      run: git add data/history.json data/predicted.json data/stable.json 
       id: git_add
 
     - name: Check for changes
