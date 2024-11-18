@@ -28,7 +28,7 @@ jobs:
       run: python main.py
 
     - name: Stage changes
-      run: git add data/history.json data/predicted.json data/stable.json vercel.json
+      run: git add data/history.json data/predicted.json data/stable.json 
       id: git_add
 
     - name: Check for changes
@@ -76,7 +76,7 @@ jobs:
           echo "No changes to commit in target repository"
           exit 0
         fi
-        git commit -m "Update annihilation.json with latest data"
+        git commit -m "Update annihilation.json with latest data [skip-ci]"
         git push https://$GH_TOKEN@github.com/AiverAiva/Wynnpool.git main
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
