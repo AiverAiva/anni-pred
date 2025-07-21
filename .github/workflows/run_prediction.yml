@@ -64,14 +64,14 @@ jobs:
 
     - name: Copy stable.json to target repository
       run: |
-        cp data/stable.json Wynnpool/src/data/annihilation.json
+        cp data/stable.json Wynnpool/apps/web/src/data/annihilation.json
 
     - name: Commit and push to target repository
       run: |
         cd Wynnpool
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add src/data/annihilation.json
+        git add apps/web/src/data/annihilation.json
         if git diff --cached --quiet; then
           echo "No changes to commit in target repository"
           exit 0
